@@ -1,5 +1,8 @@
+# Contains code from https://github.com/MagicStack/uvloop/tree/v0.16.0
+# SPDX-License-Identifier: PSF-2.0 AND (MIT OR Apache-2.0)
+# SPDX-FileCopyrightText: Copyright (c) 2015-2021 MagicStack Inc.  http://magic.io
+
 import asyncio
-import asyncio.sslproto
 import contextlib
 import gc
 import logging
@@ -26,7 +29,7 @@ BUF_MULTIPLIER = 1024 if not MACOS else 64
 
 
 def tearDownModule():
-    asyncio.set_event_loop_policy(None)
+    asyncio._set_event_loop_policy(None)
 
 
 class MyBaseProto(asyncio.Protocol):
@@ -1689,7 +1692,7 @@ class TestThreadedServer(SocketThread):
     def run(self):
         try:
             with self._sock:
-                self._sock.setblocking(0)
+                self._sock.setblocking(False)
                 self._run()
         finally:
             self._s1.close()
